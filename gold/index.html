@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Getting Up to Speed with AI</title>
+<style>
+@font-face { font-family: 'FTPolar-Medium'; src: url('../assets/fonts/FTPolar-Medium.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'FTPolar-Regular'; src: url('../assets/fonts/FTPolar-Regular.woff2') format('woff2'); font-display: swap; }
+@font-face { font-family: 'CalisteDisplay-Italic'; src: url('../assets/fonts/CalisteDisplay-Italic.woff2') format('woff2'); font-display: swap; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #000000; }
+#stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; }
+section { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; visibility: hidden; opacity: 0; transition: opacity .25s ease; }
+section.active { visibility: visible; opacity: 1; }
+section h1, section h2, section h3, section p { font-weight: 400; }
+section ul { padding-left: 1.2em; }
+section img, section svg { display: block; flex-shrink: 0; }
+section hr { border: 0; }
+section aside { display: none; }
+#notes { position: fixed; left: 0; right: 0; bottom: 0; max-height: 40%; overflow: auto; padding: 20px 28px; background: rgba(0,0,0,.88); color: #fff; font: 20px/1.5 system-ui, sans-serif; display: none; z-index: 10; }
+#notes.show { display: block; }
+#count { position: fixed; right: 14px; bottom: 10px; color: rgba(255,255,255,.45); font: 13px system-ui, sans-serif; z-index: 11; }
+</style>
+</head>
+<body>
+<div id="stage">
+<section id="cover" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;gap:96px;align-items:center">
+<div style="flex:1;display:flex;flex-direction:column;gap:44px">
+<h1 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:128px;font-weight:500;line-height:1.08">Getting up to speed with AI</h1>
+</div>
+<svg aria-label="Line drawing of a fighter jet climbing fast, with speed lines trailing behind it" viewBox="0 0 640 560" width="640" height="560" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<g transform="rotate(-25 320 280)">
+<g transform="translate(210 190)">
+<path d="M28 96 L64 84 L200 78 Q250 58 292 74 L388 92 L292 103 L64 106 Z"/>
+<path d="M208 78 Q250 66 288 76"/>
+<path d="M56 86 L34 30 L72 30 L116 82"/>
+<path d="M150 100 L92 140 L152 140 L252 101"/>
+</g>
+<path d="M20 291 L226 291" stroke-width="5"/>
+<path d="M96 277 L224 277" opacity="0.6"/>
+<path d="M64 305 L224 305" opacity="0.6"/>
+<path d="M130 222 L236 222" opacity="0.35"/>
+<path d="M150 331 L292 331" opacity="0.35"/>
+<path d="M40 352 L180 352" opacity="0.25"/>
+<path d="M60 248 L170 248" opacity="0.25"/>
+</g>
+</svg>
+<aside>Welcome. Today covers why we use AI, what to get in place first, how to prompt well, what to watch out for, and then everyone builds something.</aside>
+</section>
+<section id="why" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">I · First decision</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">Why AI?</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:24px;background:#14110A;padding:44px;border:1px solid #3A3018;border-radius:8px">
+<svg aria-label="Line drawing of a commercial airliner" viewBox="0 0 400 160" width="400" height="160" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M30 90 Q30 72 70 70 L300 70 Q350 70 372 86 Q378 92 366 96 L70 100 Q30 100 30 90 Z"/>
+<path d="M52 71 L30 22 L62 22 L104 70"/>
+<path d="M46 86 L14 98 L42 98 L74 90"/>
+<path d="M186 96 L132 142 L164 142 L244 97"/>
+<rect x="166" y="112" width="46" height="16" rx="8" fill="#14110A"/>
+<path d="M338 77 L356 85 L338 85 Z"/>
+<g fill="#D4AF37" stroke="none">
+<circle cx="120" cy="82" r="3"/><circle cx="140" cy="82" r="3"/><circle cx="160" cy="82" r="3"/><circle cx="180" cy="82" r="3"/><circle cx="200" cy="82" r="3"/><circle cx="220" cy="82" r="3"/><circle cx="240" cy="82" r="3"/><circle cx="260" cy="82" r="3"/><circle cx="280" cy="82" r="3"/><circle cx="300" cy="82" r="3"/>
+</g>
+</svg>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Airliner: do less</h3>
+<p style="font-size:30px;line-height:1.5;font-family:'CalisteDisplay-Italic', Georgia, serif;color:#CDBE94">"Draft my weekly status update from my task list."</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:24px;background:#14110A;padding:44px;border:1px solid #D4AF37;border-radius:8px">
+<svg aria-label="Line drawing of a fighter jet" viewBox="0 0 400 160" width="400" height="160" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M28 96 L64 84 L200 78 Q250 58 292 74 L388 92 L292 103 L64 106 Z"/>
+<path d="M208 78 Q250 66 288 76"/>
+<path d="M56 86 L34 30 L72 30 L116 82"/>
+<path d="M150 100 L92 140 L152 140 L252 101"/>
+<path d="M28 101 L8 101"/>
+<path d="M30 94 L14 88"/>
+<path d="M30 108 L14 114"/>
+<path d="M300 44 L352 44"/>
+<path d="M318 122 L378 122"/>
+<path d="M280 136 L324 136"/>
+</svg>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Fighter jet: do more</h3>
+<p style="font-size:30px;line-height:1.5;font-family:'CalisteDisplay-Italic', Georgia, serif;color:#CDBE94">"Read every client call note from this quarter and find the three patterns I'd never have time to find."</p>
+</div>
+</div>
+<aside>Airliner: autopilot takes work away from the pilot. It does more of my job so I can do other things. Fighter jet: the technology asks more of the pilot, who uses it to push the limits. More, better, faster. As the technology has advanced, the expectations of the fighter pilot have gone up, not down. Both are valid reasons to use AI. Ask each person: which one are you here for? Then make it clear: this session is about the fighter jet. It is about doing more.</aside>
+</section>
+<section id="pilot" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;gap:80px;align-items:center">
+<div style="flex:1;display:flex;flex-direction:column;gap:44px">
+<h1 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:104px;font-weight:500;line-height:1.1">It's not the plane, it's the pilot.</h1>
+<p style="font-size:30px;color:#CDBE94">Top Gun: Maverick</p>
+</div>
+<img src="../assets/topgun.webp" alt="A fighter pilot in a helmet and mask giving a thumbs up from the cockpit, from Top Gun" style="width:760px;height:424px;object-fit:cover;border:1px solid #D4AF37;border-radius:8px">
+<aside>Now that we have chosen the fighter jet: doing more depends on the pilot, not the plane. AI is the plane. You are the pilot. What you get out of it depends on you. We come back to this at the warnings and at the end.</aside>
+</section>
+<section id="baseline" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">II · Baseline</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">Start with what you already have</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:36px;border:1px solid #3A3018;border-radius:8px">
+<svg aria-label="Checklist icon" viewBox="0 0 96 96" width="96" height="96" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<rect x="16" y="10" width="64" height="76" rx="8"/>
+<path d="M28 32 L33 37 L42 26"/><path d="M52 32 L68 32"/>
+<path d="M28 50 L33 55 L42 44"/><path d="M52 50 L68 50"/>
+<rect x="28" y="63" width="11" height="11" rx="2"/><path d="M52 68 L68 68"/>
+</svg>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:36px;font-weight:500;line-height:1.2">Tasks</h3>
+<p style="font-size:28px;line-height:1.5;color:#CDBE94">What needs doing, and by when.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:36px;border:1px solid #3A3018;border-radius:8px">
+<svg aria-label="Notes page icon" viewBox="0 0 96 96" width="96" height="96" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M22 10 H58 L76 28 V86 H22 Z"/>
+<path d="M58 10 V28 H76"/>
+<path d="M33 44 L65 44"/><path d="M33 57 L65 57"/><path d="M33 70 L53 70"/>
+</svg>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:36px;font-weight:500;line-height:1.2">Notes</h3>
+<p style="font-size:28px;line-height:1.5;color:#CDBE94">What you learned and decided.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:36px;border:1px solid #3A3018;border-radius:8px">
+<svg aria-label="Speech bubbles icon" viewBox="0 0 96 96" width="96" height="96" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M20 14 H58 Q66 14 66 22 V42 Q66 50 58 50 H36 L24 62 V50 H20 Q12 50 12 42 V22 Q12 14 20 14 Z"/>
+<path d="M74 36 H78 Q86 36 86 44 V62 Q86 70 78 70 H76 V82 L64 70 H48 Q42 70 40 64"/>
+<g fill="#D4AF37" stroke="none"><circle cx="28" cy="32" r="3"/><circle cx="39" cy="32" r="3"/><circle cx="50" cy="32" r="3"/></g>
+</svg>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:36px;font-weight:500;line-height:1.2">Communication</h3>
+<p style="font-size:28px;line-height:1.5;color:#CDBE94">Email, Slack, meetings.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:36px;border:1px solid #3A3018;border-radius:8px">
+<svg aria-label="Seal of approval icon" viewBox="0 0 96 96" width="96" height="96" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M33 56 L26 88 L40 79 L48 90 L56 79 L70 88 L63 56"/>
+<circle cx="48" cy="36" r="26" fill="#14110A"/>
+<circle cx="48" cy="36" r="17"/>
+<path d="M40 36 L46 42 L57 30"/>
+</svg>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:36px;font-weight:500;line-height:1.2">Standards</h3>
+<p style="font-size:28px;line-height:1.5;color:#CDBE94">What I expect, when, and why.</p>
+</div>
+</div>
+<div style="flex:1"></div>
+<p style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:40px;font-weight:500;line-height:1.3">If these aren't consolidated, it will be very hard to get the most from AI.</p>
+<aside>These are things everyone already has. The question is whether each one lives in one place. The next step, connecting AI to them, only works if there is one place to connect to.</aside>
+</section>
+<section id="baseline-ex" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">II · Baseline</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:96px;font-weight:500;line-height:1.1">AI can't accelerate what it can't read.</h2>
+</div>
+<div style="flex:1"></div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:44px;border:1px solid #3A3018;border-radius:8px">
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:40px;font-weight:500;line-height:1.2">It can't read</h3>
+<ul style="font-size:30px;line-height:1.6;color:#CDBE94">
+<li>Handwritten notes</li>
+<li>What's only in your head</li>
+<li>Things scattered across different places</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:44px;border:1px solid #D4AF37;border-radius:8px">
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:40px;font-weight:500;line-height:1.2">It can read</h3>
+<ul style="font-size:30px;line-height:1.6;color:#CDBE94">
+<li>Typed notes in one home</li>
+<li>One task list</li>
+<li>Standards that are written down</li>
+</ul>
+</div>
+</div>
+<aside>The whole idea: AI can't read what isn't written somewhere it can reach. It can't accelerate or support what it can't read. Handwritten notes, or things scattered across different places, don't give it a clear, actionable signal. Ask the room: where does your work live that AI could never see?</aside>
+</section>
+<section id="connections" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">III · Connections</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">Connect these first</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+<div style="display:flex;flex-direction:column;gap:12px;background:#14110A;padding:40px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;color:#8C7632">01</p>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Email</h3>
+<p style="font-size:28px;line-height:1.4;color:#CDBE94">Gmail</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#14110A;padding:40px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;color:#8C7632">02</p>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Calendar</h3>
+<p style="font-size:28px;line-height:1.4;color:#CDBE94">Google Calendar</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#14110A;padding:40px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;color:#8C7632">03</p>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Chat</h3>
+<p style="font-size:28px;line-height:1.4;color:#CDBE94">Slack</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#14110A;padding:40px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;color:#8C7632">04</p>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Tasks</h3>
+<p style="font-size:28px;line-height:1.4;color:#CDBE94">Asana</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#14110A;padding:40px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;color:#8C7632">05</p>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Notes and docs</h3>
+<p style="font-size:28px;line-height:1.4;color:#CDBE94">Notion, Google Drive</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px;background:#14110A;padding:40px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;color:#8C7632">06</p>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Meetings</h3>
+<p style="font-size:28px;line-height:1.4;color:#CDBE94">Your notetaker</p>
+</div>
+</div>
+<aside>Connect AI to the system of record for each baseline area. These six give most of the leverage. Live demo: ask "Who do I owe a reply?" once without email connected and once with it. Without the connection you get generic advice. With it you get a list of actual people.</aside>
+</section>
+<section id="prompts" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">IV · Prompts</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">Prompts to test</h2>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+<div style="display:flex;flex-direction:column;gap:8px;background:#14110A;padding:28px 32px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#8C7632">Email</p>
+<p style="font-size:28px;line-height:1.5">Review my emails from the last month. Find people I owe a reply.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#14110A;padding:28px 32px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#8C7632">Email</p>
+<p style="font-size:28px;line-height:1.5">Review my sent emails. Summarize my writing style and the mistakes I make most.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#14110A;padding:28px 32px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#8C7632">Email</p>
+<p style="font-size:28px;line-height:1.5">Give me 3 suggestions to write better emails.</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#14110A;padding:28px 32px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#8C7632">Notes</p>
+<p style="font-size:28px;line-height:1.5">Ingest my notes. What do you notice?</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#14110A;padding:28px 32px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#8C7632">Tasks</p>
+<p style="font-size:28px;line-height:1.5">Review my open tasks. What is overdue, stale, or missing an owner?</p>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;background:#14110A;padding:28px 32px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:24px;letter-spacing:4px;text-transform:uppercase;color:#8C7632">Standards</p>
+<p style="font-size:28px;line-height:1.5">Here is our standard for X. Review this draft against it and list what falls short.</p>
+</div>
+</div>
+<aside>Demo one live, then give everyone a few minutes to run one against their own email or notes. Ask two or three people to share what surprised them.</aside>
+</section>
+<section id="quality" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">V · Prompt quality</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">The weaker the prompt, the more common the reply</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:44px;border:1px solid #3A3018;border-radius:8px">
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:40px;font-weight:500;line-height:1.2">Weak</h3>
+<p style="font-size:30px;line-height:1.5;font-family:'CalisteDisplay-Italic', Georgia, serif;color:#CDBE94">"Write an email to a client about the delay."</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:44px;border:1px solid #D4AF37;border-radius:8px">
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:40px;font-weight:500;line-height:1.2">Strong</h3>
+<p style="font-size:30px;line-height:1.5;font-family:'CalisteDisplay-Italic', Georgia, serif;color:#CDBE94">"Write to [client] at [company]. The launch slips one week because of a vendor issue. They are already frustrated. Own it, give the new date, offer a call. Under 100 words, in my voice."</p>
+</div>
+</div>
+<aside>The weak prompt gets a reply that sounds like everyone. The strong prompt gets a reply that sounds like you. A strong prompt says who it is for, what happened, how they feel, what you want, and the limits. Run both live and compare. Replace the bracketed names with a real client.</aside>
+</section>
+<section id="sessions" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">VI · Day to day</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">Expand, then collapse</h2>
+</div>
+<div style="display:flex;gap:32px;align-items:center">
+<div style="width:340px;display:flex;flex-direction:column;background:#D4AF37;color:#0A0908;padding:40px;border-radius:8px">
+<p style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:44px;font-weight:500;line-height:1.2">One goal</p>
+</div>
+<svg viewBox="0 0 100 50" width="96" height="48" preserveAspectRatio="none"><polygon points="0,15 60,15 60,0 100,25 60,50 60,35 0,35" fill="#D4AF37"/></svg>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px">
+<p style="font-size:30px;line-height:1.4;background:#14110A;padding:16px 28px;border:1px solid #3A3018;border-radius:8px">Session A</p>
+<p style="font-size:30px;line-height:1.4;background:#14110A;padding:16px 28px;border:1px solid #3A3018;border-radius:8px">Session B</p>
+<p style="font-size:30px;line-height:1.4;background:#14110A;padding:16px 28px;border:1px solid #3A3018;border-radius:8px">Session C</p>
+<p style="font-size:30px;line-height:1.4;background:#14110A;padding:16px 28px;border:1px solid #3A3018;border-radius:8px">Session D</p>
+</div>
+<svg viewBox="0 0 100 50" width="96" height="48" preserveAspectRatio="none"><polygon points="0,15 60,15 60,0 100,25 60,50 60,35 0,35" fill="#D4AF37"/></svg>
+<div style="width:340px;display:flex;flex-direction:column;background:#D4AF37;color:#0A0908;padding:40px;border-radius:8px">
+<p style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:44px;font-weight:500;line-height:1.2">One result</p>
+</div>
+</div>
+<div style="flex:1"></div>
+<p style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:40px;font-weight:500;line-height:1.3">More sessions take more focus, not less.</p>
+<aside>Before: wait inside one session until the work is done. Now: expand across several sessions, then collapse them back down as the work is merged or combined. This is why AI takes more attention than ever: you are managing many sessions and each one has to keep progressing toward its desired outcome. Example to share: this deck was built in one session while a second session built the activity page, and the two were combined at the end.</aside>
+</section>
+<section id="warn-slop" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">VII · Warning</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">Slop bombing</h2>
+</div>
+<div style="flex:1"></div>
+<p style="font-family:'CalisteDisplay-Italic', Georgia, serif;font-size:88px;line-height:1.2">"Don't share anything you haven't read, reviewed... and highlighted."</p>
+<aside>Slop bombing is dropping unread AI output on someone else and making it their job to sort out. Bad example: forwarding an AI summary you never read, with a wrong number in it. Done right: the same summary, read and corrected, with two lines highlighted and a note on why they matter. The highlight is the proof you read it.</aside>
+</section>
+<section id="warn-lose" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">VII · Warning</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">AI has nothing to lose. You do.</h2>
+</div>
+<div style="display:flex;gap:64px;align-items:stretch">
+<div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+<p style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:96px;font-weight:500;line-height:1.15">Credibility.<br>Trust.</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;background:#14110A;padding:48px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-family:'CalisteDisplay-Italic', Georgia, serif;font-size:48px;line-height:1.35">"The dumbest person you know is currently being told 'You're absolutely right!' by an AI chatbot."</p>
+</div>
+</div>
+<aside>Back to the pilot. The plane has nothing at stake. The pilot does. And a pilot who leans on autopilot for everything stops being able to fly. AI will agree with almost anything and it carries none of the consequences. Your name is on the work. Agreement from a chatbot is not evidence that you are right.</aside>
+</section>
+<section id="routines" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">VIII · Routines</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">Turn a good prompt into a routine</h2>
+</div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:44px;border:1px solid #3A3018;border-radius:8px">
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Every Monday</h3>
+<p style="font-size:30px;line-height:1.5;font-family:'CalisteDisplay-Italic', Georgia, serif;color:#CDBE94">"Check last week's email. Find people I owe a reply. Draft each reply."</p>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#14110A;padding:44px;border:1px solid #3A3018;border-radius:8px">
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Every Friday</h3>
+<p style="font-size:30px;line-height:1.5;font-family:'CalisteDisplay-Italic', Georgia, serif;color:#CDBE94">"Summarize this week's meeting notes. List my open commitments."</p>
+</div>
+</div>
+<aside>The Monday routine is the first test prompt on a schedule: once a week, look back one week, and draft the replies. The routine drafts. You still read, review, and send. Anything a routine drafts goes through the slop bombing rule before it leaves your hands.</aside>
+</section>
+<section id="activity" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">IX · Your turn</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:72px;font-weight:500;line-height:1.15">Two nouns and a verb</h2>
+</div>
+<div style="display:flex;gap:64px;align-items:center">
+<div style="flex:1;display:flex;flex-direction:column;gap:40px">
+<div style="display:flex;gap:32px;align-items:center">
+<p style="font-family:'FTPolar-Medium', Arial, sans-serif;font-size:72px;font-weight:500;line-height:1;width:64px;color:#8C7632">1</p>
+<p style="flex:1;font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:56px;font-weight:500;line-height:1.2">Draw</p>
+</div>
+<div style="display:flex;gap:32px;align-items:center">
+<p style="font-family:'FTPolar-Medium', Arial, sans-serif;font-size:72px;font-weight:500;line-height:1;width:64px;color:#8C7632">2</p>
+<p style="flex:1;font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:56px;font-weight:500;line-height:1.2">Build · [__ min]</p>
+</div>
+<div style="display:flex;gap:32px;align-items:center">
+<p style="font-family:'FTPolar-Medium', Arial, sans-serif;font-size:72px;font-weight:500;line-height:1;width:64px;color:#8C7632">3</p>
+<p style="flex:1;font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:56px;font-weight:500;line-height:1.2">Present · [__ min each]</p>
+</div>
+</div>
+<div style="width:520px;display:flex;flex-direction:column;align-items:center;background:#D4AF37;padding:40px;border-radius:8px">
+<img src="../assets/qr-gold.png" alt="QR code that opens the Two Nouns and a Verb word generator" style="width:440px;height:440px;object-fit:contain">
+</div>
+</div>
+<aside>Like two truths and a lie, but you get two nouns and a verb and decide what to create with them. Scan the code and tap Generate to draw your words. Anything counts: a page, a story, a plan, a tool. Sample draw: llama, umbrella, juggle. Show one thing you built from it so people see what is expected. Fill in the build and present times before the session.</aside>
+</section>
+<section id="limits" data-transition="fade" style="background:#0A0908;color:#D4AF37;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;gap:48px">
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;letter-spacing:6px;text-transform:uppercase;color:#8C7632">X · Before you go</p>
+<h2 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:104px;font-weight:500;line-height:1.1">If you aren't hitting limits, you aren't hitting hard enough.</h2>
+</div>
+<div style="flex:1"></div>
+<div style="display:flex;gap:32px">
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#14110A;padding:40px;border:1px solid #3A3018;border-radius:8px">
+<p style="font-size:30px;line-height:1.4;color:#CDBE94">Never hit a limit?</p>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Use it more.</h3>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:12px;background:#14110A;padding:40px;border:1px solid #D4AF37;border-radius:8px">
+<p style="font-size:30px;line-height:1.4;color:#CDBE94">Hit them every week?</p>
+<h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Upgrade.</h3>
+</div>
+</div>
+<aside>Most platforms have usage limits and restrictions at certain volumes. If you aren't bumping up against them consistently, you aren't using the tools enough. If you are bumping up against them consistently, that is the signal to upgrade. Ask the room: who has hit a limit this month?</aside>
+</section>
+<section id="close" data-transition="fade" style="background:linear-gradient(135deg, #B8922E 0%, #E6C767 50%, #B8922E 100%);color:#0A0908;font-family:'FTPolar-Regular', Arial, sans-serif;padding:128px;display:flex;flex-direction:column;justify-content:space-between">
+<h1 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:128px;font-weight:500;line-height:1.1">It's not the plane, it's the pilot.</h1>
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:500;letter-spacing:6px;text-transform:uppercase">Before next week</p>
+<p style="font-size:40px;font-weight:500;line-height:1.3">Connect one system. Set up one routine.</p>
+</div>
+<aside>Close on the same line we opened with. Ask each person to name the one system they will connect and the one routine they will set up.</aside>
+</section>
+</div>
+<div id="notes"></div>
+<div id="count"></div>
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var slides = Array.prototype.slice.call(stage.querySelectorAll('section'));
+  var notes = document.getElementById('notes');
+  var count = document.getElementById('count');
+  var i = 0;
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.transform = 'scale(' + s + ') translate(-50%, -50%)';
+  }
+  function show(n) {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach(function (el, k) { el.classList.toggle('active', k === i); });
+    var a = slides[i].querySelector('aside');
+    notes.textContent = a ? a.textContent : '';
+    count.textContent = (i + 1) + ' / ' + slides.length;
+    history.replaceState(null, '', '#' + (i + 1));
+  }
+  document.addEventListener('keydown', function (e) {
+    if (['ArrowRight', 'PageDown', ' ', 'Enter'].indexOf(e.key) > -1) { e.preventDefault(); show(i + 1); }
+    else if (['ArrowLeft', 'PageUp', 'Backspace'].indexOf(e.key) > -1) { e.preventDefault(); show(i - 1); }
+    else if (e.key === 'Home') show(0);
+    else if (e.key === 'End') show(slides.length - 1);
+    else if (e.key === 'n' || e.key === 'N') notes.classList.toggle('show');
+    else if (e.key === 'f' || e.key === 'F') {
+      if (document.fullscreenElement) document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+    }
+  });
+  document.addEventListener('click', function (e) {
+    if (notes.contains(e.target)) return;
+    show(i + (e.clientX < window.innerWidth * 0.3 ? -1 : 1));
+  });
+  var x0 = null;
+  document.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) { e.preventDefault(); show(i + (dx < 0 ? 1 : -1)); }
+  });
+  window.addEventListener('resize', fit);
+  window.addEventListener('hashchange', function () { var n = (parseInt(location.hash.slice(1), 10) || 1) - 1; if (n !== i) show(n); });
+  fit();
+  show((parseInt(location.hash.slice(1), 10) || 1) - 1);
+})();
+</script>
+</body>
+</html>
