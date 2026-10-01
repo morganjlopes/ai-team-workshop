@@ -29,21 +29,23 @@ section aside { display: none; }
 <div style="flex:1;display:flex;flex-direction:column;gap:44px">
 <h1 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:128px;font-weight:500;line-height:1.08">Getting up to speed with AI</h1>
 </div>
-<svg aria-label="Line drawing of a fighter jet climbing fast, with speed lines trailing behind it" viewBox="0 0 640 560" width="640" height="560" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<svg aria-label="Line drawing of a fighter jet climbing fast, with speed lines trailing behind it" viewBox="0 0 640 560" width="640" height="560" fill="#0A0908" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
 <g transform="rotate(-25 320 280)">
-<g transform="translate(210 190)">
-<path d="M28 96 L64 84 L200 78 Q250 58 292 74 L388 92 L292 103 L64 106 Z"/>
-<path d="M208 78 Q250 66 288 76"/>
-<path d="M56 86 L34 30 L72 30 L116 82"/>
-<path d="M150 100 L92 140 L152 140 L252 101"/>
-</g>
-<path d="M20 291 L226 291" stroke-width="5"/>
-<path d="M96 277 L224 277" opacity="0.6"/>
-<path d="M64 305 L224 305" opacity="0.6"/>
-<path d="M130 222 L236 222" opacity="0.35"/>
-<path d="M150 331 L292 331" opacity="0.35"/>
+<path d="M16 289 L222 289" stroke-width="5"/>
+<path d="M96 275 L222 275" opacity="0.6"/>
+<path d="M64 303 L222 303" opacity="0.6"/>
+<path d="M120 218 L246 218" opacity="0.35"/>
+<path d="M150 332 L300 332" opacity="0.35"/>
 <path d="M40 352 L180 352" opacity="0.25"/>
-<path d="M60 248 L170 248" opacity="0.25"/>
+<path d="M60 246 L170 246" opacity="0.25"/>
+<g transform="translate(210 190)">
+<path d="M70 86 L44 28 L84 28 L130 82 Z"/>
+<path d="M204 78 C226 54 270 54 302 78 Z"/>
+<path d="M248 60 L252 76"/>
+<path d="M24 96 L66 82 L196 76 L302 76 L392 94 L302 104 L66 108 Z"/>
+<path d="M52 98 L22 122 L56 122 L98 102 Z"/>
+<path d="M178 98 L104 142 L170 142 L274 100 Z"/>
+</g>
 </g>
 </svg>
 <aside>Welcome. Today covers why we use AI, what to get in place first, how to prompt well, what to watch out for, and then everyone builds something.</aside>
@@ -55,32 +57,34 @@ section aside { display: none; }
 </div>
 <div style="display:flex;gap:32px">
 <div style="flex:1;display:flex;flex-direction:column;gap:24px;background:#14110A;padding:44px;border:1px solid #3A3018;border-radius:8px">
-<svg aria-label="Line drawing of a commercial airliner" viewBox="0 0 400 160" width="400" height="160" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-<path d="M30 90 Q30 72 70 70 L300 70 Q350 70 372 86 Q378 92 366 96 L70 100 Q30 100 30 90 Z"/>
-<path d="M52 71 L30 22 L62 22 L104 70"/>
-<path d="M46 86 L14 98 L42 98 L74 90"/>
-<path d="M186 96 L132 142 L164 142 L244 97"/>
-<rect x="166" y="112" width="46" height="16" rx="8" fill="#14110A"/>
-<path d="M338 77 L356 85 L338 85 Z"/>
+<svg aria-label="Line drawing of a commercial airliner" viewBox="0 0 400 160" width="400" height="160" fill="#14110A" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M58 74 L36 20 L66 20 L114 74 Z"/>
+<path d="M26 88 C26 76 44 70 76 70 L296 70 C336 70 364 78 378 88 C384 93 378 100 362 100 L76 102 C44 102 26 98 26 88 Z"/>
+<path d="M334 78 L358 86 L336 86 Z"/>
 <g fill="#D4AF37" stroke="none">
-<circle cx="120" cy="82" r="3"/><circle cx="140" cy="82" r="3"/><circle cx="160" cy="82" r="3"/><circle cx="180" cy="82" r="3"/><circle cx="200" cy="82" r="3"/><circle cx="220" cy="82" r="3"/><circle cx="240" cy="82" r="3"/><circle cx="260" cy="82" r="3"/><circle cx="280" cy="82" r="3"/><circle cx="300" cy="82" r="3"/>
+<circle cx="112" cy="82" r="3"/><circle cx="132" cy="82" r="3"/><circle cx="152" cy="82" r="3"/><circle cx="172" cy="82" r="3"/><circle cx="192" cy="82" r="3"/><circle cx="212" cy="82" r="3"/><circle cx="232" cy="82" r="3"/><circle cx="252" cy="82" r="3"/><circle cx="272" cy="82" r="3"/><circle cx="292" cy="82" r="3"/><circle cx="312" cy="82" r="3"/>
 </g>
+<path d="M42 86 L10 100 L44 100 L80 90 Z"/>
+<path d="M198 92 L138 144 L170 144 L258 92 Z"/>
+<rect x="196" y="112" width="52" height="18" rx="9"/>
 </svg>
 <h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Airliner: do less</h3>
 <p style="font-size:30px;line-height:1.5;font-family:'CalisteDisplay-Italic', Georgia, serif;color:#CDBE94">"Draft my weekly status update from my task list."</p>
 </div>
 <div style="flex:1;display:flex;flex-direction:column;gap:24px;background:#14110A;padding:44px;border:1px solid #D4AF37;border-radius:8px">
-<svg aria-label="Line drawing of a fighter jet" viewBox="0 0 400 160" width="400" height="160" fill="none" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-<path d="M28 96 L64 84 L200 78 Q250 58 292 74 L388 92 L292 103 L64 106 Z"/>
-<path d="M208 78 Q250 66 288 76"/>
-<path d="M56 86 L34 30 L72 30 L116 82"/>
-<path d="M150 100 L92 140 L152 140 L252 101"/>
-<path d="M28 101 L8 101"/>
-<path d="M30 94 L14 88"/>
-<path d="M30 108 L14 114"/>
-<path d="M300 44 L352 44"/>
-<path d="M318 122 L378 122"/>
-<path d="M280 136 L324 136"/>
+<svg aria-label="Line drawing of a fighter jet" viewBox="0 0 400 160" width="400" height="160" fill="#14110A" stroke="#D4AF37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+<path d="M70 86 L44 28 L84 28 L130 82 Z"/>
+<path d="M204 78 C226 54 270 54 302 78 Z"/>
+<path d="M248 60 L252 76"/>
+<path d="M24 96 L66 82 L196 76 L302 76 L392 94 L302 104 L66 108 Z"/>
+<path d="M52 98 L22 122 L56 122 L98 102 Z"/>
+<path d="M178 98 L104 142 L170 142 L274 100 Z"/>
+<path d="M20 92 L6 87"/>
+<path d="M18 99 L2 99"/>
+<path d="M20 106 L6 111"/>
+<path d="M312 42 L368 42"/>
+<path d="M332 124 L392 124"/>
+<path d="M290 140 L342 140"/>
 </svg>
 <h3 style="font-family:'FTPolar-Medium', Arial, sans-serif;letter-spacing:-0.03em;font-size:48px;font-weight:500;line-height:1.2">Fighter jet: do more</h3>
 <p style="font-size:30px;line-height:1.5;font-family:'CalisteDisplay-Italic', Georgia, serif;color:#CDBE94">"Read every client call note from this quarter and find the three patterns I'd never have time to find."</p>
